@@ -1,5 +1,20 @@
 import random
 
+# starting deck
+full_deck = []
+
+# card spaces
+player_1_deck = []
+player_1_pile = []
+player_1_field = None
+player_2_deck = []
+player_2_pile =[]
+player_2_field = None
+player_1_deck_size = 0
+player_2_deck_size = 0
+player_1_wagers = []
+player_2_wagers = []
+
 class Card:
 	def __init__(self, num_value, suit, name):
 		self.num_value = num_value
@@ -14,28 +29,151 @@ def check_duplicates(deck):
 			return False
 		seen.append(card)
 	return True
-	
-def shuffle_deck():
-	pass
-	
-
-
-full_deck = []
-
-player_1_deck = []
-player_1_pile = []
-player_1_field = None
-player_2_deck = []
-player_2_pile =[]
-player_2_field = None
-player_1_deck_size = 0
-player_2_deck_size = 0
 
 def update_deck_size()
 	global player_1_deck_size, player_2_deck_size
 	
 	player_1_deck_size = len(player_1_deck) + len(player_1_pile)
 	player_2_deck_size = len(player_2_deck) + len(player_2_pile)
+
+def startup():
+	global player_2_deck
+	
+	for card in playing_cards.values():
+		full_deck.append(card)
+
+	if len(full_deck) == 52 and check_duplicates(full_deck):
+		pass
+	else:
+		print("Error: The 52 card playing deck was not intialized properly.")
+	
+	# split the full_deck in half randomly
+	while len(full_deck) > 26:
+		card_index = random.randint(0,len(full_deck)-1)
+		player_1_deck.append(full_deck[card_index])
+		full_deck.remove(full_deck[card_index])
+	
+	# assign remaining cards to the other deck
+	player_2_deck = full_deck
+	return None
+		
+# call by saying for example: player_1_deck = shuffle(player_1_deck)
+def shuffle(pile):
+	shuffled_deck = []
+	for card in pile:
+		card_index = random.randint(0, len(pile)-1)
+		shuffled_deck.append(pile[card_index])
+		pile.remove(pile[card_index])
+	return shuffled_deck
+
+def hand():
+	global player_1_field, player_2_field
+
+	#shuffle as required
+	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
+		player_1_deck = shuffle(player_1_pile)
+	player_1_field = player_1_deck[0]
+	player_1_deck.remove(player_1_deck[0])
+	input(f"You play: {player_1_field.name}")
+	
+	# shuffle as required
+	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
+		player_2_deck = shuffle(player_2_pile)
+	player_2_field = player_2_deck[0]
+	player_2_deck.remove(player_2_deck[0])
+	input(f"Your Opponent plays: {player_2_field.name}")
+	print("")
+	
+	# fight!
+	combat()
+
+def combat ():
+	if player_1_field[-1].num_value > player_2_field[-1].num_value:
+		if len(player_1_field) == 1: 
+			player_1_pile.append(player_1_field[0])
+			player_1_field.clear()
+			player_1_pile.append(player_2_field[0])
+			player_2_field.clear()
+			input(f"You win the hand! And acquire your opponent's {player_2_deck[0].name}.")
+		else:
+			for card in player_1_field:
+				player_1_pile.append(card)
+			for card in player_2_field:
+				player_1_pile.append(card)
+			input("You win the war!! And acquire all wagered cards!")
+			display_wagers()
+
+
+	elif player_1_field[-1].num_value < player_2_field[-1].num_value:
+		
+		print(f"You lose the hand, relinquishing your {player_1_deck[0].name} to your opponent.")
+		player_2_pile.append(player_1_deck[0])
+		player_1_deck.remove(player_1_deck[0])
+		player_2_pile.append(player_2_deck[0])
+		player_2_deck.remove(player_2_deck[0])
+	elif player_1_field[-1].num_value == player_2_field[-1].num_value:
+		# this needs to be a dynamic function
+		input(f"It's time to go to war!")
+		print("")
+		war()		
+	else:
+		print("Error: Card values cannot be compared.")
+
+def display_wagers():
+	input(f"You wagered: {player_1_wagers}")
+	input(f"Your opponent wagered: {player_2_wagers}")
+	clear_wagers()
+
+def clear_wagers():
+	player_1_wagers.clear()
+	player_2_wagers.clear()
+
+def war():
+	update_deck_size()
+	if player_1_deck_size < 4 and player_2_deck_size < 4:
+		if player_1_deck_size > player_2_deck_size
+			print("Neither player has enough cards to go to war, but your opponent ran out of cards first, so you win by default!")
+			break
+		else:
+			print("Neither player has enough cards to go to war, but you ran out of cards first, so you lost by default!")
+			break
+	elif player_1_deck_size > 4 and player_2_deck_size < 4:
+		print("Your opponent doesn't have enough cards to go to war, so you win by default!")
+		break
+	elif player_1_deck_size < 4 and player_2_deck_size > 4:
+		print("You don't have enough cards to go to war, so you lose by default!")
+		break
+	
+	# war happens
+	else:
+		player_1_field.append(player_1_deck[0], player_1_deck[1], player_1_deck[2], player_1_deck[3])
+		player_1_wagers.append(player_1_deck[1].name, player_1_deck[2].name, player_1_deck[3].name)
+		player_1_deck.remove(player_1_deck[0], player_1_deck[1], player_1_deck[2], player_1_deck[3])
+		input("You wager three face-down cards and flip the fourth one, revealing...")
+		input(f'{player_1_field[-1].name}!')
+
+		player_2_field.append(player_2_deck[0], player_2_deck[1], player_2_deck[2], player_2_deck[3])
+		player_2_wagers.append(player_2_deck[1].name, player_2_deck[2].name, player_2_deck[3].name)
+		player_2_deck.remove(player_2_deck[0], player_2_deck[1], player_2_deck[2], player_2_deck[3])
+		input("Your opponent does the same, revealing...")
+		input(f'{player_2_field[-1].name}!')
+
+		combat()
+
+def game_loop():
+	while len(player_1_deck) > 0 and len(player_2_deck) > 0:
+		update_deck_size()
+		print(f"Deck Size: {player_1_deck_size} cards.")
+		print(f"Opponent Deck Size: {player_2_deck_size} cards.")
+		print("")
+		input("Play hand.")
+		hand()
+	if player_1_deck_size < 1:
+		print("You lose...")
+	elif player_2_deck_size < 1:
+		print("You win!")
+	else:
+		print("Error: Game win/lose conditions are broken.")
 
 # Intialize a full deck playing cards
 playing_cards ={
@@ -93,94 +231,7 @@ playing_cards ={
 	'ace_hearts': Card(14, 'hearts','Ace of Hearts')
 }
 
-for card in playing_cards.values():
-	full_deck.append(card)
-	
-def startup():
-	global player_2_deck
-	
-	if len(full_deck) == 52 and check_duplicates(full_deck):
-		pass
-	else:
-		print("Error: The 52 card playing deck was not intialized properly.")
-	
-	# split the full_deck in half randomly
-	while len(full_deck) > 26:
-		card_index = random.randint(0,len(full_deck)-1)
-		player_1_deck.append(full_deck[card_index])
-		full_deck.remove(full_deck[card_index])
-	
-	# assign remaining cards to the other deck
-	player_2_deck = full_deck
-	return None
-		
-# call by saying for example: player_1_deck = shuffle(player_1_deck)
-def shuffle(pile):
-	shuffled_deck = []
-	for card in pile:
-		card_index = random.randint(0, len(pile)-1)
-		shuffled_deck.append(pile[card_index])
-		pile.remove(pile[card_index])
-	return shuffled_deck
-
-
-def war():
-	update_deck_size()
-	if 
-
-def hand():
-	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
-		player_1_deck = shuffle(player_1_pile)
-	input(f"You play: {player_1_deck[0].name}")
-	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
-		player_2_deck = shuffle(player_2_pile)
-	input(f"Your Opponent plays: {player_2_deck[0].name}")
-	print("")
-	if player_1_deck[0].num_value > player_2_deck[0].num_value:
-		print(f"You win the hand! And acquire your opponent's {player_2_deck[0].name}.")
-		player_1_pile.append(player_1_deck[0])
-		player_1_deck.remove(player_1_deck[0])
-		player_1_pile.append(player_2_deck[0])
-		player_2_deck.remove(player_2_deck[0])
-	elif player_1_deck[0].num_value < player_2_deck[0].num_value:
-		print(f"You lose the hand, relinquishing your {player_1_deck[0].name} to your opponent.")
-		player_2_pile.append(player_1_deck[0])
-		player_1_deck.remove(player_1_deck[0])
-		player_2_pile.append(player_2_deck[0])
-		player_2_deck.remove(player_2_deck[0])
-	elif player_1_deck[0].num_value == player_2_deck[0].num_value:
-		# this needs to be a dynamic function
-		input(f"It's time to go to war!")
-		print("")
-		if len(player_1_deck) >= 5:
-			input("You wager three face-down cards and flip the fourth one, revealing...")
-			input(f'{player_1_deck[4].name}!')
-		else:
-			input("You don't have enough cards in your deck to go to war.")
-			print("")
-			print("You lose...")
-			break
-	else:
-		print("Error: Card values cannot be compared.")
-
-def game_loop():
-	while len(player_1_deck) > 0 and len(player_2_deck) > 0:
-		update_deck_size()
-		print(f"Deck Size: {player_1_deck_size} cards.")
-		print(f"Opponent Deck Size: {player_2_deck_size} cards.")
-		print("")
-		input("Play hand.")
-		hand()
-	if player_1_deck_size < 1:
-		print("You lose...")
-	elif player_2_deck_size < 1:
-		print("You win!")
-	else:
-		print("Error: Game win/lose conditions are broken.")
-
-
 startup()
-
 print("War: The Card Game.")
 print("")
 input("Press Enter to play.")
@@ -189,4 +240,3 @@ game_loop()
 
 # make rules callable with user input somehow
 #input("Rules: Each player begins with 26 randomized playing cards in their deck. Each turn, both players draw the top card of their deck and then those cards fight each other. The high card takes the loser hostage, assimilating that losing card into their own deck. If there is a tie, a war occurs and players then wager three face down cards from the top of their deck, battling with the fourth to determine who wins all of the wagered cards. The first player to run out of cards in their deck loses the game.")
-
