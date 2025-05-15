@@ -115,7 +115,7 @@ def combat ():
 		print("Error: Card values cannot be compared.")
 
 def war():
-	global player_1_deck, player_2_deck
+	global player_1_deck, player_2_deck, player_1_pile, player_2_pile
 
 	update_deck_size()
 	if player_1_deck_size < 4 and player_2_deck_size < 4:
@@ -139,10 +139,10 @@ def war():
 
 		for i in range(4):
 			player_1_field.append(player_1_deck[i])
+			player_1_deck.pop(0)
 		for i in range (3):
-			player_1_wagers.append(player_1_deck[i].name)
-		for i in range(4):
-			player_1_deck.remove(player_1_field[-1-i])
+			player_1_wagers.append(player_1_field[i].name)
+			
 		print("You wager three face-down cards and flip the fourth one, revealing...")
 		print(f'{player_1_field[-1].name}!')
 
@@ -151,10 +151,10 @@ def war():
 
 		for i in range(4):
 			player_2_field.append(player_2_deck[i])
+			player_2_deck.pop(0)
 		for i in range (3):
-			player_2_wagers.append(player_2_deck[i].name)
-		for i in range(4):
-			player_2_deck.remove(player_2_field[-1-i])
+			player_2_wagers.append(player_2_field[i].name)
+			
 		print("Your opponent does the same, revealing...")
 		print(f'{player_2_field[-1].name}!')
 
