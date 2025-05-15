@@ -130,7 +130,7 @@ def war():
 		for i in range (3):
 			player_1_wagers.append(player_1_deck[i].name)
 		for i in range(4):
-			player_1_deck.remove(player_1_deck[i])
+			player_1_deck.remove(player_1_field[-1-i])
 		input("You wager three face-down cards and flip the fourth one, revealing...")
 		input(f'{player_1_field[-1].name}!')
 
@@ -142,7 +142,7 @@ def war():
 		for i in range (3):
 			player_2_wagers.append(player_2_deck[i].name)
 		for i in range(4):
-			player_2_deck.remove(player_2_deck[i])
+			player_2_deck.remove(player_2_field[-1-i])
 		input("Your opponent does the same, revealing...")
 		input(f'{player_2_field[-1].name}!')
 
