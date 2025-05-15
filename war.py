@@ -28,14 +28,15 @@ def print_deck_size():
 
 def game_loop():
 	while player_1_deck_size > 0 and player_2_deck_size > 0:
-		update_deck_size()
 		print_deck_size()
-		if player_1_deck_size < 1:
-			print("You lose...")
-		elif player_2_deck_size < 1:
-			print("You win!")
 		print("Play hand.")
 		hand()
+		update_deck_size()
+		if player_1_deck_size < 1:
+			print("You lose...")
+			play 
+		elif player_2_deck_size < 1:
+			print("You win!")		
 
 def shuffle_check_1():
 	global player_1_deck, player_1_pile
@@ -205,6 +206,8 @@ def startup():
 	
 	# assign remaining cards to the other deck
 	player_2_deck = full_deck
+
+	update_deck_size()
 		
 def shuffle(deck, pile):
 	shuffled_deck = deck.copy() + pile.copy()
