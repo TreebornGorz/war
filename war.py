@@ -27,20 +27,15 @@ def print_deck_size():
 	print("")
 
 def game_loop():
-	update_deck_size()
 	while player_1_deck_size > 0 and player_2_deck_size > 0:
 		update_deck_size()
 		print_deck_size()
+		if player_1_deck_size < 1:
+			print("You lose...")
+		elif player_2_deck_size < 1:
+			print("You win!")
 		print("Play hand.")
 		hand()
-		
-	update_deck_size()
-	if player_1_deck_size < 1:
-		print("You lose...")
-	elif player_2_deck_size < 1:
-		print("You win!")
-	else:
-		print("Error: Game win/lose conditions are broken.")
 
 def shuffle_check_1():
 	global player_1_deck, player_1_pile
@@ -121,7 +116,7 @@ def war():
 	if player_1_deck_size < 4 and player_2_deck_size < 4:
 		if player_1_deck_size > player_2_deck_size:
 			print("Neither player has enough cards to go to war, but your opponent ran out of cards first, so you win by default!")
-			lose()
+			win()
 		else:
 			print("Neither player has enough cards to go to war, but you ran out of cards first, so you lost by default!")
 			win()
