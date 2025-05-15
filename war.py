@@ -138,7 +138,7 @@ def war():
 		player_1_pile = []
 
 		for i in range(4):
-			player_1_field.append(player_1_deck[i])
+			player_1_field.append(player_1_deck[0])
 			player_1_deck.pop(0)
 		for i in range (3):
 			player_1_wagers.append(player_1_field[i].name)
@@ -150,7 +150,7 @@ def war():
 		player_2_pile = []
 
 		for i in range(4):
-			player_2_field.append(player_2_deck[i])
+			player_2_field.append(player_2_deck[0])
 			player_2_deck.pop(0)
 		for i in range (3):
 			player_2_wagers.append(player_2_field[i].name)
