@@ -46,16 +46,16 @@ def hand():
 	#shuffle as required
 	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
 		player_1_deck = shuffle(player_1_pile)
-	player_1_field = player_1_deck[0]
+	player_1_field.append(player_1_deck[0])
 	player_1_deck.remove(player_1_deck[0])
-	input(f"You play: {player_1_field.name}")
+	input(f"You play: {player_1_field[-1].name}")
 	
 	# shuffle as required
 	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
 		player_2_deck = shuffle(player_2_pile)
-	player_2_field = player_2_deck[0]
+	player_2_field.append(player_2_deck[0])
 	player_2_deck.remove(player_2_deck[0])
-	input(f"Your Opponent plays: {player_2_field.name}")
+	input(f"Your Opponent plays: {player_2_field[-1].name}")
 	print("")
 	
 	# fight!
@@ -67,7 +67,7 @@ def combat ():
 			player_1_pile.append(player_1_field[0])
 			player_1_pile.append(player_2_field[0])
 			clear_fields()
-			input(f"You win the hand! And acquire your opponent's {player_2_deck[0].name}.")
+			input(f"You win the hand! And acquire your opponent's {player_2_field[0].name}.")
 		else:
 			for card in player_1_field:
 				player_1_pile.append(card)
@@ -78,12 +78,20 @@ def combat ():
 			display_wagers()
 
 	elif player_1_field[-1].num_value < player_2_field[-1].num_value:
-		
-		print(f"You lose the hand, relinquishing your {player_1_deck[0].name} to your opponent.")
-		player_2_pile.append(player_1_deck[0])
-		player_1_deck.remove(player_1_deck[0])
-		player_2_pile.append(player_2_deck[0])
-		player_2_deck.remove(player_2_deck[0])
+		if len(player_1_field) == 1: 
+			player_2_pile.append(player_1_field[0])
+			player_2_pile.append(player_2_field[0])
+			clear_fields()
+			input(f"You win the hand! And acquire your opponent's {player_2_field[0].name}.")
+		else:
+			for card in player_1_field:
+				player_2_pile.append(card)
+			for card in player_2_field:
+				player_2_pile.append(card)
+			clear_fields()
+			input("You lose the war!! And acquire all wagered cards!")
+			display_wagers()
+
 	elif player_1_field[-1].num_value == player_2_field[-1].num_value:
 		# this needs to be a dynamic function
 		input(f"It's time to go to war!")
