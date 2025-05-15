@@ -27,7 +27,7 @@ def print_deck_size():
 	print("")
 
 def game_loop():
-	while len(player_1_deck) > 0 and len(player_2_deck) > 0:
+	while player_1_deck_size > 0 and player_2_deck_size > 0:
 		update_deck_size()
 		print_deck_size()
 		input("Play hand.")
@@ -39,7 +39,7 @@ def game_loop():
 	elif player_2_deck_size < 1:
 		print("You win!")
 	else:
-		game_loop()
+		print("Error: Game win/lose conditions are broken.")
 
 def hand():
 	global player_1_field, player_2_field, player_1_deck, player_1_pile, player_2_deck, player_2_pile
