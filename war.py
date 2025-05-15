@@ -42,19 +42,31 @@ def game_loop():
 	else:
 		print("Error: Game win/lose conditions are broken.")
 
+def shuffle_check_1():
+	global player_1_deck, player_1_pile
+
+	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
+		player_1_deck = shuffle(player_1_deck, player_1_pile)
+		player_1_pile = []
+
+def shuffle_check_2():
+	global player_2_deck, player_2_pile
+
+	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
+		player_2_deck = shuffle(player_2_deck, player_2_pile)
+		player_2_pile = []
+
 def hand():
 	global player_1_field, player_2_field, player_1_deck, player_1_pile, player_2_deck, player_2_pile
 
-	#shuffle as required
-	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
-		player_1_deck = shuffle(player_1_deck, player_1_pile)
+	shuffle_check_1()
+
 	player_1_field.append(player_1_deck[0])
 	player_1_deck.remove(player_1_deck[0])
 	print(f"You play: {player_1_field[-1].name}")
 	
-	# shuffle as required
-	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
-		player_2_deck = shuffle(player_2_deck, player_2_pile)
+	shuffle_check_2()
+	
 	player_2_field.append(player_2_deck[0])
 	player_2_deck.remove(player_2_deck[0])
 	print(f"Your Opponent plays: {player_2_field[-1].name}")
