@@ -1,0 +1,192 @@
+import random
+
+class Card:
+	def __init__(self, num_value, suit, name):
+		self.num_value = num_value
+		self.suit = suit
+		self.name = name
+	
+# returns False if a dupllicate card is found in a deck
+def check_duplicates(deck):
+	seen = []
+	for card in deck:
+		if card in seen:
+			return False
+		seen.append(card)
+	return True
+	
+def shuffle_deck():
+	pass
+	
+
+
+full_deck = []
+
+player_1_deck = []
+player_1_pile = []
+player_1_field = None
+player_2_deck = []
+player_2_pile =[]
+player_2_field = None
+player_1_deck_size = 0
+player_2_deck_size = 0
+
+def update_deck_size()
+	global player_1_deck_size, player_2_deck_size
+	
+	player_1_deck_size = len(player_1_deck) + len(player_1_pile)
+	player_2_deck_size = len(player_2_deck) + len(player_2_pile)
+
+# Intialize a full deck playing cards
+playing_cards ={
+    'two_spades': Card(2, 'spades', 'Two of Spades'),
+	'two_clubs': Card(2, 'clubs', 'Two of Clubs'),
+	'two_diamonds': Card(2, 'diamonds', 'Two of Diamonds'),
+	'two_hearts': Card(2, 'hearts', 'Two of Hearts'),
+	'three_spades': Card(3, 'spades', 'Three of Spades'),
+	'three_clubs': Card(3, 'clubs', 'Three of Clubs'),
+	'three_diamonds': Card(3, 'diamonds', 'Three of Diamonds'),
+	'three_hearts': Card(3, 'hearts', 'Three of Hearts'),
+	'four_spades': Card(4, 'spades', 'Four of Spades'),
+	'four_clubs': Card(4, 'clubs', 'Four of Clubs'),
+	'four_diamonds': Card(4, 'diamonds', 'Four of Diamonds'),
+	'four_hearts': Card(4, 'hearts', 'Four of Hearts'),
+	'five_spades': Card(5, 'spades', 'Five of Spades'),
+	'five_clubs': Card(5, 'clubs', 'Five of Clubs'),
+	'five_diamonds': Card(5, 'diamonds', 'Five of Diamonds'),
+	'five_hearts': Card(5, 'hearts', 'Five of Hearts'),
+	'six_spades': Card(6, 'spades', 'Six of Spades'),
+	'six_clubs': Card(6, 'clubs', 'Six of Clubs'),
+	'six_diamonds': Card(6, 'diamonds','Six of Diamonds'),
+	'six_hearts': Card(6, 'hearts', 'Six of hearts'),
+	'seven_spades': Card(7, 'spades', 'Seven of Spades'),
+	'seven_clubs': Card(7, 'clubs','Seven of Clubs'),
+	'seven_diamonds': Card(7, 'diamonds', 'Seven of Diamonds'),
+	'seven_hearts': Card(7, 'hearts','Seven of Hearts'),
+	'eight_spades': Card(8, 'spades','Eight of Spades'),
+	'eight_clubs': Card(8, 'clubs','Eight of Clubs'),
+	'eight_diamonds': Card(8, 'diamonds','Eight of Diamonds'),
+	'eight_hearts': Card(8, 'hearts','Eight of Hearts'),
+	'nine_spades': Card(9, 'spades','Nine of Spades'),
+	'nine_clubs': Card(9, 'clubs','Nine of Clubs'),
+	'nine_diamonds': Card(9, 'diamonds','Nine of Diamonds'),
+	'nine_hearts': Card(9, 'hearts','Nine of Hearts'),
+	'ten_spades': Card(10, 'spades','Ten of Spades'),
+	'ten_clubs': Card(10, 'clubs','Ten of Clubs'),
+	'ten_diamonds': Card(10, 'diamonds','Ten of Diamonds'),
+	'ten_hearts': Card(10, 'hearts','Ten of Hearts'),
+	'jack_spades': Card(11, 'spades','Jack of Spades'),
+	'jack_clubs': Card(11, 'clubs','Jack of Clubs'),
+	'jack_diamonds': Card(11, 'diamonds','Jack of Diamonds'),
+	'jack_hearts': Card(11, 'hearts','Jack of Hearts'),
+	'queen_spades': Card(12, 'spades','Queen of Spades'),
+	'queen_clubs': Card(12, 'clubs','Queen of Clubs'),
+	'queen_diamonds': Card(12, 'diamonds','Queen of Diamonds'),
+	'queen_hearts': Card(12, 'hearts','Queen of Hearts'),
+	'king_spades': Card(13, 'spades','King of Spades'),
+	'king_clubs': Card(13, 'clubs','King of Clubs'),
+	'king_diamonds': Card(13, 'diamonds','King of Diamonds'),
+	'king_hearts': Card(13, 'hearts','King of Hearts'),
+	'ace_spades': Card(14, 'spades','Ace of Spades'),
+	'ace_clubs': Card(14, 'clubs','Ace of Clubs'),
+	'ace_diamonds': Card(14, 'diamonds','Ace of Diamonds'),
+	'ace_hearts': Card(14, 'hearts','Ace of Hearts')
+}
+
+for card in playing_cards.values():
+	full_deck.append(card)
+	
+def startup():
+	global player_2_deck
+	
+	if len(full_deck) == 52 and check_duplicates(full_deck):
+		pass
+	else:
+		print("Error: The 52 card playing deck was not intialized properly.")
+	
+	# split the full_deck in half randomly
+	while len(full_deck) > 26:
+		card_index = random.randint(0,len(full_deck)-1)
+		player_1_deck.append(full_deck[card_index])
+		full_deck.remove(full_deck[card_index])
+	
+	# assign remaining cards to the other deck
+	player_2_deck = full_deck
+	return None
+		
+# call by saying for example: player_1_deck = shuffle(player_1_deck)
+def shuffle(pile):
+	shuffled_deck = []
+	for card in pile:
+		card_index = random.randint(0, len(pile)-1)
+		shuffled_deck.append(pile[card_index])
+		pile.remove(pile[card_index])
+	return shuffled_deck
+
+
+def war():
+	update_deck_size()
+	if 
+
+def hand():
+	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
+		player_1_deck = shuffle(player_1_pile)
+	input(f"You play: {player_1_deck[0].name}")
+	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
+		player_2_deck = shuffle(player_2_pile)
+	input(f"Your Opponent plays: {player_2_deck[0].name}")
+	print("")
+	if player_1_deck[0].num_value > player_2_deck[0].num_value:
+		print(f"You win the hand! And acquire your opponent's {player_2_deck[0].name}.")
+		player_1_pile.append(player_1_deck[0])
+		player_1_deck.remove(player_1_deck[0])
+		player_1_pile.append(player_2_deck[0])
+		player_2_deck.remove(player_2_deck[0])
+	elif player_1_deck[0].num_value < player_2_deck[0].num_value:
+		print(f"You lose the hand, relinquishing your {player_1_deck[0].name} to your opponent.")
+		player_2_pile.append(player_1_deck[0])
+		player_1_deck.remove(player_1_deck[0])
+		player_2_pile.append(player_2_deck[0])
+		player_2_deck.remove(player_2_deck[0])
+	elif player_1_deck[0].num_value == player_2_deck[0].num_value:
+		# this needs to be a dynamic function
+		input(f"It's time to go to war!")
+		print("")
+		if len(player_1_deck) >= 5:
+			input("You wager three face-down cards and flip the fourth one, revealing...")
+			input(f'{player_1_deck[4].name}!')
+		else:
+			input("You don't have enough cards in your deck to go to war.")
+			print("")
+			print("You lose...")
+			break
+	else:
+		print("Error: Card values cannot be compared.")
+
+def game_loop():
+	while len(player_1_deck) > 0 and len(player_2_deck) > 0:
+		update_deck_size()
+		print(f"Deck Size: {player_1_deck_size} cards.")
+		print(f"Opponent Deck Size: {player_2_deck_size} cards.")
+		print("")
+		input("Play hand.")
+		hand()
+	if player_1_deck_size < 1:
+		print("You lose...")
+	elif player_2_deck_size < 1:
+		print("You win!")
+	else:
+		print("Error: Game win/lose conditions are broken.")
+
+
+startup()
+
+print("War: The Card Game.")
+print("")
+input("Press Enter to play.")
+print("")
+game_loop()
+
+# make rules callable with user input somehow
+#input("Rules: Each player begins with 26 randomized playing cards in their deck. Each turn, both players draw the top card of their deck and then those cards fight each other. The high card takes the loser hostage, assimilating that losing card into their own deck. If there is a tie, a war occurs and players then wager three face down cards from the top of their deck, battling with the fourth to determine who wins all of the wagered cards. The first player to run out of cards in their deck loses the game.")
+
