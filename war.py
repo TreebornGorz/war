@@ -103,6 +103,8 @@ def combat ():
 		print("Error: Card values cannot be compared.")
 
 def war():
+	global player_1_deck, player_2_deck
+
 	update_deck_size()
 	if player_1_deck_size < 4 and player_2_deck_size < 4:
 		if player_1_deck_size > player_2_deck_size:
