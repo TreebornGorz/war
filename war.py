@@ -81,7 +81,7 @@ def combat ():
 		if len(player_1_field) == 1: 
 			player_2_pile.append(player_1_field[0])
 			player_2_pile.append(player_2_field[0])
-			input(f"You win the hand! And acquire your opponent's {player_2_field[0].name}.")
+			input(f"You lose the hand, relinquishing your {player_1_field[0].name}...")
 			clear_fields()
 		else:
 			for card in player_1_field:
