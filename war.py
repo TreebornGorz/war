@@ -34,7 +34,6 @@ def game_loop():
 		update_deck_size()
 		if player_1_deck_size < 1:
 			print("You lose...")
-			play 
 		elif player_2_deck_size < 1:
 			print("You win!")		
 
