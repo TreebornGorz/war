@@ -31,7 +31,7 @@ def game_loop():
 	while player_1_deck_size > 0 and player_2_deck_size > 0:
 		update_deck_size()
 		print_deck_size()
-		input("Play hand.")
+		print("Play hand.")
 		hand()
 		
 	update_deck_size()
@@ -50,14 +50,14 @@ def hand():
 		player_1_deck = shuffle(player_1_pile)
 	player_1_field.append(player_1_deck[0])
 	player_1_deck.remove(player_1_deck[0])
-	input(f"You play: {player_1_field[-1].name}")
+	print(f"You play: {player_1_field[-1].name}")
 	
 	# shuffle as required
 	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
 		player_2_deck = shuffle(player_2_pile)
 	player_2_field.append(player_2_deck[0])
 	player_2_deck.remove(player_2_deck[0])
-	input(f"Your Opponent plays: {player_2_field[-1].name}")
+	print(f"Your Opponent plays: {player_2_field[-1].name}")
 	print("")
 	
 	# fight!
@@ -68,14 +68,14 @@ def combat ():
 		if len(player_1_field) == 1: 
 			player_1_pile.append(player_1_field[0])
 			player_1_pile.append(player_2_field[0])			
-			input(f"You win the hand! And acquire your opponent's {player_2_field[0].name}.")
+			print(f"You win the hand! And acquire your opponent's {player_2_field[0].name}.")
 			clear_fields()
 		else:
 			for card in player_1_field:
 				player_1_pile.append(card)
 			for card in player_2_field:
 				player_1_pile.append(card)			
-			input("You win the war!! And acquire all wagered cards!")
+			print("You win the war!! And acquire all wagered cards!")
 			display_wagers()
 			clear_fields()
 
@@ -83,20 +83,20 @@ def combat ():
 		if len(player_1_field) == 1: 
 			player_2_pile.append(player_1_field[0])
 			player_2_pile.append(player_2_field[0])
-			input(f"You lose the hand, relinquishing your {player_1_field[0].name}...")
+			print(f"You lose the hand, relinquishing your {player_1_field[0].name}...")
 			clear_fields()
 		else:
 			for card in player_1_field:
 				player_2_pile.append(card)
 			for card in player_2_field:
 				player_2_pile.append(card)			
-			input("You lose the war!! And relinquish all wagered cards!")
+			print("You lose the war!! And relinquish all wagered cards!")
 			display_wagers()
 			clear_fields()
 
 	elif player_1_field[-1].num_value == player_2_field[-1].num_value:
 		# this needs to be a dynamic function
-		input(f"It's time to go to war!")
+		print(f"It's time to go to war!")
 		print("")
 		war()		
 	else:
@@ -131,8 +131,8 @@ def war():
 			player_1_wagers.append(player_1_deck[i].name)
 		for i in range(4):
 			player_1_deck.remove(player_1_field[-1-i])
-		input("You wager three face-down cards and flip the fourth one, revealing...")
-		input(f'{player_1_field[-1].name}!')
+		print("You wager three face-down cards and flip the fourth one, revealing...")
+		print(f'{player_1_field[-1].name}!')
 
 		# shuffle as required
 		if len(player_2_deck) == 0 and len(player_2_pile) > 0:
@@ -143,8 +143,8 @@ def war():
 			player_2_wagers.append(player_2_deck[i].name)
 		for i in range(4):
 			player_2_deck.remove(player_2_field[-1-i])
-		input("Your opponent does the same, revealing...")
-		input(f'{player_2_field[-1].name}!')
+		print("Your opponent does the same, revealing...")
+		print(f'{player_2_field[-1].name}!')
 
 		combat()
 
@@ -213,8 +213,8 @@ def shuffle(pile):
 
 
 def display_wagers():
-	input(f"You wagered: {player_1_wagers}")
-	input(f"Your opponent wagered: {player_2_wagers}")
+	print(f"You wagered: {player_1_wagers}")
+	print(f"Your opponent wagered: {player_2_wagers}")
 	clear_wagers()
 
 def clear_wagers():
@@ -281,9 +281,9 @@ playing_cards ={
 startup()
 print("War: The Card Game.")
 print("")
-input("Press Enter to play.")
+print("Press Enter to play.")
 print("")
 game_loop()
 
-# make rules callable with user input somehow
-#input("Rules: Each player begins with 26 randomized playing cards in their deck. Each turn, both players draw the top card of their deck and then those cards fight each other. The high card takes the loser hostage, assimilating that losing card into their own deck. If there is a tie, a war occurs and players then wager three face down cards from the top of their deck, battling with the fourth to determine who wins all of the wagered cards. The first player to run out of cards in their deck loses the game.")
+# make rules callable with user print somehow
+#print("Rules: Each player begins with 26 randomized playing cards in their deck. Each turn, both players draw the top card of their deck and then those cards fight each other. The high card takes the loser hostage, assimilating that losing card into their own deck. If there is a tie, a war occurs and players then wager three face down cards from the top of their deck, battling with the fourth to determine who wins all of the wagered cards. The first player to run out of cards in their deck loses the game.")
