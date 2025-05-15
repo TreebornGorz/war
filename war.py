@@ -62,13 +62,13 @@ def hand():
 	shuffle_check_1()
 
 	player_1_field.append(player_1_deck[0])
-	player_1_deck.remove(player_1_deck[0])
+	player_1_deck.pop(0)
 	print(f"You play: {player_1_field[-1].name}")
 	
 	shuffle_check_2()
 	
 	player_2_field.append(player_2_deck[0])
-	player_2_deck.remove(player_2_deck[0])
+	player_2_deck.pop(0)
 	print(f"Your Opponent plays: {player_2_field[-1].name}")
 	print("")
 	
