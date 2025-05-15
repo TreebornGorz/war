@@ -120,6 +120,9 @@ def war():
 	
 	# war happens
 	else:
+		#shuffle as required
+		if len(player_1_deck) == 0 and len(player_1_pile) > 0:
+			player_1_deck = shuffle(player_1_pile)
 		for i in range(4):
 			player_1_field.append(player_1_deck[i])
 		for i in range (3):
@@ -129,6 +132,9 @@ def war():
 		input("You wager three face-down cards and flip the fourth one, revealing...")
 		input(f'{player_1_field[-1].name}!')
 
+		# shuffle as required
+		if len(player_2_deck) == 0 and len(player_2_pile) > 0:
+			player_2_deck = shuffle(player_2_pile)
 		for i in range(4):
 			player_2_field.append(player_2_deck[i])
 		for i in range (3):
