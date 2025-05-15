@@ -27,6 +27,7 @@ def print_deck_size():
 	print("")
 
 def game_loop():
+	update_deck_size()
 	while player_1_deck_size > 0 and player_2_deck_size > 0:
 		update_deck_size()
 		print_deck_size()
