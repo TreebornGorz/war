@@ -33,6 +33,7 @@ def game_loop():
 		input("Play hand.")
 		hand()
 		
+	update_deck_size()
 	if player_1_deck_size < 1:
 		print("You lose...")
 	elif player_2_deck_size < 1:
