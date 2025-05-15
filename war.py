@@ -29,7 +29,7 @@ def print_deck_size():
 def game_loop():
 	while player_1_deck_size > 0 and player_2_deck_size > 0:
 		print_deck_size()
-		print("Play hand.")
+		input("Play hand.")
 		hand()
 		update_deck_size()
 		if player_1_deck_size < 1:
