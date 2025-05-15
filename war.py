@@ -88,7 +88,7 @@ def combat ():
 				player_2_pile.append(card)
 			for card in player_2_field:
 				player_2_pile.append(card)			
-			input("You lose the war!! And acquire all wagered cards!")
+			input("You lose the war!! And relinquish all wagered cards!")
 			display_wagers()
 			clear_fields()
 
