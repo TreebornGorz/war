@@ -137,19 +137,22 @@ players = [user, opponent]
 
 ## Handlers ##
 
+# Maximum of 52 players players
 def startup():
     # split the full_deck in half randomly
     if classic_rules:
-        # while the starting deck has cards, deal them in pairs
-        while len(start_deck) > 0:
-            card_index = random.randint(0,len(start_deck)-1)
-            # deal one card to user
-            user.deck.get_card_deck(start_deck[card_index])
-            start_deck.remove(start_deck[card_index])
-            # deal second card to the opponent
-            card_index = random.randint(0,len(start_deck)-1)
-            opponent.deck.get_card_deck(start_deck[card_index])
-            start_deck.remove(start_deck[card_index])
+        # while the starting deck has cards, shuffle, then deal them equally
+        random.shuffle(start_deck)
+        # deal half the deck to user
+        cards = len(start_deck)
+        num_players = len(players)
+        if num_players > cards: 
+            print("Error: There are more players than cards in the starting deck.")
+            return
+        for player in players:
+            for i in range(cards/num_players)
+                player.deck.get_card_deck(start_deck[i])
+                start_deck.remove(start_deck[i])
 
 def game_loop():    
     while play:
