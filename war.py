@@ -6,10 +6,10 @@ full_deck = []
 # card spaces
 player_1_deck = []
 player_1_pile = []
-player_1_field = None
+player_1_field = []
 player_2_deck = []
 player_2_pile =[]
-player_2_field = None
+player_2_field = []
 player_1_deck_size = 0
 player_2_deck_size = 0
 player_1_wagers = []
@@ -20,54 +20,28 @@ class Card:
 		self.num_value = num_value
 		self.suit = suit
 		self.name = name
-	
-# returns False if a dupllicate card is found in a deck
-def check_duplicates(deck):
-	seen = []
-	for card in deck:
-		if card in seen:
-			return False
-		seen.append(card)
-	return True
 
-def update_deck_size()
-	global player_1_deck_size, player_2_deck_size
-	
-	player_1_deck_size = len(player_1_deck) + len(player_1_pile)
-	player_2_deck_size = len(player_2_deck) + len(player_2_pile)
+def print_deck_size():
+	print(f"Deck Size: {player_1_deck_size} cards.")
+	print(f"Opponent Deck Size: {player_2_deck_size} cards.")
+	print("")
 
-def startup():
-	global player_2_deck
-	
-	for card in playing_cards.values():
-		full_deck.append(card)
-
-	if len(full_deck) == 52 and check_duplicates(full_deck):
-		pass
-	else:
-		print("Error: The 52 card playing deck was not intialized properly.")
-	
-	# split the full_deck in half randomly
-	while len(full_deck) > 26:
-		card_index = random.randint(0,len(full_deck)-1)
-		player_1_deck.append(full_deck[card_index])
-		full_deck.remove(full_deck[card_index])
-	
-	# assign remaining cards to the other deck
-	player_2_deck = full_deck
-	return None
+def game_loop():
+	while len(player_1_deck) > 0 and len(player_2_deck) > 0:
+		update_deck_size()
+		print_deck_size()
+		input("Play hand.")
+		hand()
 		
-# call by saying for example: player_1_deck = shuffle(player_1_deck)
-def shuffle(pile):
-	shuffled_deck = []
-	for card in pile:
-		card_index = random.randint(0, len(pile)-1)
-		shuffled_deck.append(pile[card_index])
-		pile.remove(pile[card_index])
-	return shuffled_deck
+	if player_1_deck_size < 1:
+		print("You lose...")
+	elif player_2_deck_size < 1:
+		print("You win!")
+	else:
+		print("Error: Game win/lose conditions are broken.")
 
 def hand():
-	global player_1_field, player_2_field
+	global player_1_field, player_2_field, player_1_deck, player_1_pile, player_2_deck, player_2_pile
 
 	#shuffle as required
 	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
@@ -91,18 +65,17 @@ def combat ():
 	if player_1_field[-1].num_value > player_2_field[-1].num_value:
 		if len(player_1_field) == 1: 
 			player_1_pile.append(player_1_field[0])
-			player_1_field.clear()
 			player_1_pile.append(player_2_field[0])
-			player_2_field.clear()
+			clear_fields()
 			input(f"You win the hand! And acquire your opponent's {player_2_deck[0].name}.")
 		else:
 			for card in player_1_field:
 				player_1_pile.append(card)
 			for card in player_2_field:
 				player_1_pile.append(card)
+			clear_fields()
 			input("You win the war!! And acquire all wagered cards!")
 			display_wagers()
-
 
 	elif player_1_field[-1].num_value < player_2_field[-1].num_value:
 		
@@ -119,30 +92,21 @@ def combat ():
 	else:
 		print("Error: Card values cannot be compared.")
 
-def display_wagers():
-	input(f"You wagered: {player_1_wagers}")
-	input(f"Your opponent wagered: {player_2_wagers}")
-	clear_wagers()
-
-def clear_wagers():
-	player_1_wagers.clear()
-	player_2_wagers.clear()
-
 def war():
 	update_deck_size()
 	if player_1_deck_size < 4 and player_2_deck_size < 4:
-		if player_1_deck_size > player_2_deck_size
+		if player_1_deck_size > player_2_deck_size:
 			print("Neither player has enough cards to go to war, but your opponent ran out of cards first, so you win by default!")
-			break
+			lose()
 		else:
 			print("Neither player has enough cards to go to war, but you ran out of cards first, so you lost by default!")
-			break
+			win()
 	elif player_1_deck_size > 4 and player_2_deck_size < 4:
 		print("Your opponent doesn't have enough cards to go to war, so you win by default!")
-		break
+		win()
 	elif player_1_deck_size < 4 and player_2_deck_size > 4:
 		print("You don't have enough cards to go to war, so you lose by default!")
-		break
+		lose()
 	
 	# war happens
 	else:
@@ -160,20 +124,79 @@ def war():
 
 		combat()
 
-def game_loop():
-	while len(player_1_deck) > 0 and len(player_2_deck) > 0:
-		update_deck_size()
-		print(f"Deck Size: {player_1_deck_size} cards.")
-		print(f"Opponent Deck Size: {player_2_deck_size} cards.")
-		print("")
-		input("Play hand.")
-		hand()
-	if player_1_deck_size < 1:
-		print("You lose...")
-	elif player_2_deck_size < 1:
-		print("You win!")
+
+def win():
+	global player_2_deck, player_2_field, player_2_pile
+
+	player_2_deck, player_2_field, player_2_pile = [], [], []
+
+def lose():
+	global player_1_deck, player_1_field, player_1_pile
+
+	player_1_deck, player_1_field, player_1_pile = [], [], []
+
+# returns False if a dupllicate card is found in a deck
+def check_duplicates(deck):
+	seen = []
+	for card in deck:
+		if card in seen:
+			return False
+		seen.append(card)
+	return True
+
+def update_deck_size():
+	global player_1_deck_size, player_2_deck_size
+	
+	player_1_deck_size = len(player_1_deck) + len(player_1_pile)
+	player_2_deck_size = len(player_2_deck) + len(player_2_pile)
+
+def clear_fields():
+	global player_1_field, player_2_field
+
+	player_1_field, player_2_field = [], []
+
+def startup():
+	global player_2_deck
+	
+	for card in playing_cards.values():
+		full_deck.append(card)
+
+	if len(full_deck) == 52 and check_duplicates(full_deck):
+		pass
 	else:
-		print("Error: Game win/lose conditions are broken.")
+		print("Error: The 52 card playing deck was not intialized properly.")
+	
+	# split the full_deck in half randomly
+	while len(full_deck) > 26:
+		card_index = random.randint(0,len(full_deck)-1)
+		player_1_deck.append(full_deck[card_index])
+		full_deck.remove(full_deck[card_index])
+	
+	# assign remaining cards to the other deck
+	player_2_deck = full_deck
+		
+# call by saying for example: player_1_deck = shuffle(player_1_deck)
+def shuffle(pile):
+	shuffled_deck = []
+	for card in pile:
+		card_index = random.randint(0, len(pile)-1)
+		shuffled_deck.append(pile[card_index])
+		pile.remove(pile[card_index])
+	return shuffled_deck
+
+
+
+
+
+def display_wagers():
+	input(f"You wagered: {player_1_wagers}")
+	input(f"Your opponent wagered: {player_2_wagers}")
+	clear_wagers()
+
+def clear_wagers():
+	global player_1_wagers, player_2_wagers
+
+	player_1_wagers, player_2_wagers = [], []
 
 # Intialize a full deck playing cards
 playing_cards ={
