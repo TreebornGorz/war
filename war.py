@@ -47,14 +47,14 @@ def hand():
 
 	#shuffle as required
 	if len(player_1_deck) == 0 and len(player_1_pile) > 0:
-		player_1_deck = shuffle(player_1_pile)
+		player_1_deck = shuffle(player_1_deck, player_1_pile)
 	player_1_field.append(player_1_deck[0])
 	player_1_deck.remove(player_1_deck[0])
 	print(f"You play: {player_1_field[-1].name}")
 	
 	# shuffle as required
 	if len(player_2_deck) == 0 and len(player_2_pile) > 0:
-		player_2_deck = shuffle(player_2_pile)
+		player_2_deck = shuffle(player_2_deck, player_2_pile)
 	player_2_field.append(player_2_deck[0])
 	player_2_deck.remove(player_2_deck[0])
 	print(f"Your Opponent plays: {player_2_field[-1].name}")
@@ -124,7 +124,7 @@ def war():
 	else:
 		#shuffle as required
 		if len(player_1_deck) == 0 and len(player_1_pile) > 0:
-			player_1_deck = shuffle(player_1_pile)
+			player_1_deck = shuffle(player_1_deck, player_1_pile)
 		for i in range(4):
 			player_1_field.append(player_1_deck[i])
 		for i in range (3):
@@ -136,7 +136,7 @@ def war():
 
 		# shuffle as required
 		if len(player_2_deck) == 0 and len(player_2_pile) > 0:
-			player_2_deck = shuffle(player_2_pile)
+			player_2_deck = shuffle(player_2_deck, player_2_pile)
 		for i in range(4):
 			player_2_field.append(player_2_deck[i])
 		for i in range (3):
@@ -199,18 +199,10 @@ def startup():
 	# assign remaining cards to the other deck
 	player_2_deck = full_deck
 		
-# call by saying for example: player_1_deck = shuffle(player_1_deck)
-def shuffle(pile):
-	shuffled_deck = []
-	for card in pile:
-		card_index = random.randint(0, len(pile)-1)
-		shuffled_deck.append(pile[card_index])
-		pile.remove(pile[card_index])
+def shuffle(deck, pile):
+	shuffled_deck = deck.copy() + pile.copy()
+	random.shuffle(shuffled_deck)
 	return shuffled_deck
-
-
-
-
 
 def display_wagers():
 	print(f"You wagered: {player_1_wagers}")
