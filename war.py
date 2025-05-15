@@ -39,7 +39,7 @@ def game_loop():
 	elif player_2_deck_size < 1:
 		print("You win!")
 	else:
-		print("Error: Game win/lose conditions are broken.")
+		game_loop()
 
 def hand():
 	global player_1_field, player_2_field, player_1_deck, player_1_pile, player_2_deck, player_2_pile
