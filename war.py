@@ -135,6 +135,7 @@ def war():
 	# war happens
 	else:
 		player_1_deck = shuffle(player_1_deck, player_1_pile)
+		player_1_pile = []
 
 		for i in range(4):
 			player_1_field.append(player_1_deck[i])
@@ -146,6 +147,7 @@ def war():
 		print(f'{player_1_field[-1].name}!')
 
 		player_2_deck = shuffle(player_2_deck, player_2_pile)
+		player_2_pile = []
 
 		for i in range(4):
 			player_2_field.append(player_2_deck[i])
