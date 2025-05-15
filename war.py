@@ -65,32 +65,32 @@ def combat ():
 	if player_1_field[-1].num_value > player_2_field[-1].num_value:
 		if len(player_1_field) == 1: 
 			player_1_pile.append(player_1_field[0])
-			player_1_pile.append(player_2_field[0])
-			clear_fields()
+			player_1_pile.append(player_2_field[0])			
 			input(f"You win the hand! And acquire your opponent's {player_2_field[0].name}.")
+			clear_fields()
 		else:
 			for card in player_1_field:
 				player_1_pile.append(card)
 			for card in player_2_field:
-				player_1_pile.append(card)
-			clear_fields()
+				player_1_pile.append(card)			
 			input("You win the war!! And acquire all wagered cards!")
 			display_wagers()
+			clear_fields()
 
 	elif player_1_field[-1].num_value < player_2_field[-1].num_value:
 		if len(player_1_field) == 1: 
 			player_2_pile.append(player_1_field[0])
 			player_2_pile.append(player_2_field[0])
-			clear_fields()
 			input(f"You win the hand! And acquire your opponent's {player_2_field[0].name}.")
+			clear_fields()
 		else:
 			for card in player_1_field:
 				player_2_pile.append(card)
 			for card in player_2_field:
-				player_2_pile.append(card)
-			clear_fields()
+				player_2_pile.append(card)			
 			input("You lose the war!! And acquire all wagered cards!")
 			display_wagers()
+			clear_fields()
 
 	elif player_1_field[-1].num_value == player_2_field[-1].num_value:
 		# this needs to be a dynamic function
