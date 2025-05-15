@@ -245,7 +245,7 @@ playing_cards ={
 	'six_spades': Card(6, 'spades', 'Six of Spades'),
 	'six_clubs': Card(6, 'clubs', 'Six of Clubs'),
 	'six_diamonds': Card(6, 'diamonds','Six of Diamonds'),
-	'six_hearts': Card(6, 'hearts', 'Six of hearts'),
+	'six_hearts': Card(6, 'hearts', 'Six of Hearts'),
 	'seven_spades': Card(7, 'spades', 'Seven of Spades'),
 	'seven_clubs': Card(7, 'clubs','Seven of Clubs'),
 	'seven_diamonds': Card(7, 'diamonds', 'Seven of Diamonds'),
